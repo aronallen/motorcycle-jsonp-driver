@@ -2,9 +2,9 @@ let most = require(`most`)
 let jsonp = require(`jsonp`)
 
 function createResponse$(url) {
-  return most.create(publisher => {
+  return most.create((next, end, error) => {
     if (typeof url !== `string`) {
-      publisher.error(new Error(`Observable of requests given to JSONP ` +
+      error(new Error(`Observable of requests given to JSONP ` +
         `Driver must emit URL strings.`))
       return () => {} // noop
     }
@@ -12,14 +12,14 @@ function createResponse$(url) {
     try {
       jsonp(url, (err, res) => {
         if (err) {
-          publisher.error(err)
+          error(err)
         } else {
-          publisher.next(res)
-          publisher.end()
+          next(res)
+          end()
         }
       })
     } catch (err) {
-      publisher.error(err)
+      error(err)
     }
   })
 }
