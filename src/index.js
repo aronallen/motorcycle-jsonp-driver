@@ -1,10 +1,10 @@
-let Rx = require(`rx`)
+let most = require(`most`)
 let jsonp = require(`jsonp`)
 
 function createResponse$(url) {
-  return Rx.Observable.create(observer => {
+  return most.create(publisher => {
     if (typeof url !== `string`) {
-      observer.onError(new Error(`Observable of requests given to JSONP ` +
+      publisher.error(new Error(`Observable of requests given to JSONP ` +
         `Driver must emit URL strings.`))
       return () => {} // noop
     }
@@ -12,14 +12,14 @@ function createResponse$(url) {
     try {
       jsonp(url, (err, res) => {
         if (err) {
-          observer.onError(err)
+          publisher.error(err)
         } else {
-          observer.onNext(res)
-          observer.onCompleted()
+          publisher.next(res)
+          publisher.end()
         }
       })
     } catch (err) {
-      observer.onError(err)
+      publisher.error(err)
     }
   })
 }
@@ -38,9 +38,10 @@ module.exports = {
   /**
    * JSONP Driver factory.
    *
-   * This is a function which, when called, returns a JSONP Driver for Cycle.js
-   * apps. The driver is also a function, and it takes an Observable of requests
-   * (URL strings) as input, and generates a metastream of responses.
+   * This is a function which, when called, returns a JSONP Driver for
+   * Motorcycle.js apps. The driver is also a function, and it takes
+   * an Observable of requests (URL strings) as input, and generates a
+   * metastream of responses.
    *
    * **Requests**. The Observable of requests should strings as the URL of the
    * remote resource over HTTP.

@@ -1,22 +1,19 @@
 {
-  "name": "@cycle/jsonp",
+  "name": "@motorcycle/jsonp",
   "version": "5.0.0",
-  "description": "A Cycle.js Driver for making HTTP requests through JSONP",
+  "description": "A Motorcycle.js Driver for making HTTP requests through JSONP",
   "main": "lib/index.js",
-  "author": "Andre Staltz",
+  "author": "Aron Allen",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/cyclejs/cycle-jsonp-driver"
+    "url": "https://github.com/motorcyclejs/motorcycle-jsonp-driver"
   },
   "dependencies": {
     "jsonp": "0.2.0"
   },
-  "peerDependencies": {
-    "rx": ">=2"
-  },
   "devDependencies": {
-    "rx": "4.0.x",
+    "most": "0.16.0",
     "babel": "5.8.23",
     "babelify": "6.1.3",
     "browserify": "11.0.1",
@@ -27,9 +24,6 @@
     "eslint-plugin-no-class": "0.1.0",
     "markdox": "0.1.9",
     "uglify-js": "2.4.24"
-  },
-  "browserify-shim": {
-    "rx": "global:Rx"
   },
   "scripts": {
     "eslint": "eslint src/",
